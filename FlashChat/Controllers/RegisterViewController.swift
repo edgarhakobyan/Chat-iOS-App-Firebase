@@ -23,6 +23,9 @@ class RegisterViewController: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
                 if let e = error {
                     print("Error on register \(e)")
+                    let alert = UIAlertController(title: "Register Error", message: e.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     self.performSegue(withIdentifier: Constants.Segues.registerSegue, sender: self)
                 }
