@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RegisterViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
@@ -14,9 +15,19 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
     @IBAction func registerPressed(_ sender: UIButton) {
+        if let email = emailTextField.text,
+            let password = passwordTextField.text {
+            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                if let e = error {
+                    print("Error on register \(e)")
+                } else {
+                    self.performSegue(withIdentifier: Constants.Segues.registerSegue, sender: self)
+                }
+            }
+        }
     }
     
 }
